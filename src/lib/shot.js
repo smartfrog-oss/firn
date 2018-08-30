@@ -1,12 +1,12 @@
 const fs = require('fs')
 /* npm */
 const makeDir = require('make-dir')
-const { URL } = require('url')
-// const ora = require('ora')
+
 /* local */
-const config = require('../config')
+const config = require('../config').getConfig()
 // const log = require('./log')
 const compare = require('./compare')
+const { getPaths } = require('./util')
 
 const viewports = config.viewports
 
@@ -28,7 +28,7 @@ class Shot {
 
     await makeDir(paths.folder)
     // log('smile  📷 ', this.url, this.viewport)
-    const page = await browser.newPage()
+    const page = await global.browser.newPage()
     page.setViewport(this.viewport)
     await page.goto(this.url, { waitUntil: 'networkidle2' })
     const buffer = await page.screenshot({ path: paths.file, fullPage: true })
@@ -74,22 +74,6 @@ class Shot {
   get fishyPath() {
     return this.paths.fishy.file
   }
-}
-
-// function prepareList(url) {
-//   return Object.entries(viewports).map(([suffix, width]) => {
-//     const viewport = { width, height: 600 }
-//     return { viewport, ...getPaths(url, suffix) }
-//   })
-// }
-
-function getPaths(url, { suffix = '', base, extension = 'png' }) {
-  if (!url || !base) throw new Error('expected url and base folder')
-  const { host, pathname } = new URL(url)
-  const name = pathname.replace('/', '').replace(/[^a-zA-Z0-9]/g, '_')
-  const folder = `${base}/${host}`
-  const file = `${folder}/${name}@${suffix}.${extension}`
-  return { file, folder }
 }
 
 module.exports = Shot

@@ -4,15 +4,13 @@ const viewports = require('./src/config/viewport')
 const log = require('./src/lib/log')
 const Shot = require('./src/lib/shot')
 
-const urls = ['https://smartfrog.com/de-de/shop']
-
-async function main() {
+async function main(urls, config) {
   await boot()
-  await checkAll()
+  await checkAll(urls)
   await teardown()
 }
 
-async function checkAll() {
+async function checkAll(urls) {
   const list = urlMap(urls)
   const promise = list.map(checkItem)
   return Promise.all(promise)
@@ -43,11 +41,4 @@ async function teardown() {
   global.browser.close()
 }
 
-main()
-  .then(e => {
-    log('👍 ALL GOOD')
-  })
-  .catch(e => {
-    log('😦 Oh No! ', e)
-    process.exit(1)
-  })
+module.exports = main

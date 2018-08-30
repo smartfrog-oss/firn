@@ -1,2 +1,4 @@
-const log = (...args) => console.log('\n', new Date().toLocaleString(), '➡️      ', ...args)
-module.exports = log
+module.exports = function log(...args) {
+  // if (!process.env.DEBUG_MODE) return
+  console.log('\n'.concat(new Date().toLocaleString(), '➡️      '), ...args)
+}
