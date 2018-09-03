@@ -4,6 +4,9 @@
   "description": "visual regression test tool",
   "main": "main.js",
   "author": "mouafa",
+  "scripts": {
+    "test": "jest"
+  },
   "license": "MIT",
   "bin": {
     "firn": "bin/cli.js"
@@ -20,6 +23,7 @@
     "royax": "0.1.1"
   },
   "devDependencies": {
+    "coveralls": "3.0.2",
     "jest": "23.5.0"
   },
   "jest": {
