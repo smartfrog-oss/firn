@@ -1,11 +1,11 @@
-// const manar = require('./')
-const manar = require('./main2')
+// const firn = require('./')
+const firn = require('./')
 const log = require('./src/lib/log')
 
 const urls = ['https://smartfrog.com/de-de/shop']
 const config = {}
 
-manar(urls[0], config)
+firn(urls[0], config)
   .then(e => {
     log('👍 ALL GOOD')
   })

@@ -1,12 +1,12 @@
 {
-  "name": "manar",
+  "name": "firn",
   "version": "0.1.0",
   "description": "visual regression test tool",
   "main": "main.js",
   "author": "mouafa",
   "license": "MIT",
   "bin": {
-    "manar": "./cli.js"
+    "firn": "bin/cli.js"
   },
   "dependencies": {
     "buffer-to-stream": "1.0.0",
