@@ -4,7 +4,7 @@ const makeDir = require('make-dir')
 
 /* local */
 const config = require('../config').getConfig()
-// const log = require('./log')
+const log = require('./log')
 const compare = require('./compare')
 const { getPaths } = require('./util')
 
@@ -13,6 +13,7 @@ const viewports = config.viewports
 class Shot {
   constructor(url, viewport = viewports.laptop, suffix = 'laptop') {
     this.url = url
+    this.suffix = suffix
     this.paths = {
       legit: getPaths(url, { suffix, base: config.legitShotPath, extension: config.screenshotExt }),
       pending: getPaths(url, { suffix, base: config.pendingShotPath, extension: config.screenshotExt }),
@@ -55,7 +56,7 @@ class Shot {
     await makeDir(this.paths.fishy.folder)
     const [err, match] = await compare(this.ligitPath, this.pendingPath, this.fishyPath)
     if (err) throw new Error(err)
-    // this.spinner.stop()
+    if (!match) throw new Error(`shots are not matching: ${this.url}@${this.suffix}`)
     return match
   }
 

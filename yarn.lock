@@ -656,6 +656,10 @@ combined-stream@1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@2.17.1:
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
+
 compare-versions@^3.1.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-3.3.1.tgz#1ede3172b713c15f7c7beb98cb74d2d82576dad3"
@@ -2908,6 +2912,17 @@ rimraf@^2.5.4, rimraf@^2.6.1:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
     glob "^7.0.5"
+
+roya@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/roya/-/roya-0.1.1.tgz#2887b4c70dfd17ea0b9b60a261c4078dae334548"
+
+royax@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/royax/-/royax-0.1.1.tgz#3bd3cc650b6349c6de61ce1d346f7b8de3153a59"
+  dependencies:
+    pngjs "3.3.3"
+    roya "0.1.1"
 
 rsvp@^3.3.3:
   version "3.6.2"

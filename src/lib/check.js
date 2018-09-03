@@ -10,10 +10,10 @@ async function check(urls) {
 
 async function checkPage(url) {
   const page = new Page(url)
-  await page.runTasks(tada)
+  await page.runTasks(verifier)
 }
 
-async function tada([url, viewport, suffix]) {
+async function verifier([url, viewport, suffix]) {
   const shot = new Shot(url, viewport, suffix)
   const match = await shot.check()
   log('match', match, url, suffix)

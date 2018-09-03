@@ -1,7 +1,7 @@
-const diff = require('pixeldiff')
+const royax = require('royax')
 
 async function compare(img1, img2, writeTo) {
-  const [err, result] = await diff(img1, img2, {}, writeTo)
+  const [err, result] = await royax(img1, img2, writeTo)
   // console.log('result', result)
   if (err) return [err]
   const match = result.match === 1
