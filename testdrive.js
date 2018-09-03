@@ -2,10 +2,10 @@
 const firn = require('./')
 const log = require('./src/lib/log')
 
-const urls = ['https://smartfrog.com/de-de/shop']
+const urls = ['https://smartfrog.com/de-de/shop', 'https://smartfrog.com/de-de/shop/products']
 const config = {}
 
-firn(urls[0], config)
+firn(urls, config)
   .then(e => {
     log('👍 ALL GOOD')
   })

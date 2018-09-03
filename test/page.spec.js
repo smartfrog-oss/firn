@@ -25,8 +25,8 @@ describe('Page | getTasks', () => {
     const max = Object.keys(viewports).length
     let count = 0
     const tasks = page.getTasks(() => ++count)
-    expect(tasks).toEqual(expect.arrayContaining([expect.any(Function)]))
-    tasks.map(task => task())
+    expect(tasks).toEqual(expect.arrayContaining([{ task: expect.any(Function), title: expect.any(String) }]))
+    tasks.map(({ task }) => task())
     expect(count).toEqual(max)
   })
 
@@ -34,8 +34,8 @@ describe('Page | getTasks', () => {
     const page = new Page(url)
     let cb = jest.fn()
     const tasks = page.getTasks(cb)
-    expect(tasks).toEqual(expect.arrayContaining([expect.any(Function)]))
-    tasks[0]()
+    expect(tasks).toEqual(expect.arrayContaining([{ task: expect.any(Function), title: expect.any(String) }]))
+    tasks[0].task()
     expect(cb).toHaveBeenCalledTimes(1)
     expect(cb).toHaveBeenCalledWith(expect.arrayContaining(expectedSort[0]))
   })
