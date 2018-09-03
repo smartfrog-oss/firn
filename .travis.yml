@@ -26,6 +26,8 @@ cache:
 notifications:
   slack:
     secure: $SLACK_TOKEN
+    on_success: always
+    on_failure: always
 
 deploy:
   - provider: npm

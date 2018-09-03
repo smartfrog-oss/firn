@@ -12,13 +12,10 @@
     "firn": "bin/cli.js"
   },
   "dependencies": {
-    "buffer-to-stream": "1.0.0",
     "commander": "2.17.1",
-    "jpeg-js": "0.3.4",
     "listr": "0.14.1",
     "make-dir": "1.3.0",
     "pixelmatch": "4.0.2",
-    "pngjs": "3.3.3",
     "puppeteer": "1.7.0",
     "royax": "0.1.1"
   },

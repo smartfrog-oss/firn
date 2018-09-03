@@ -1,6 +1,6 @@
 # Firn
 
-Firn, wrapper for Roya image diffing library
+Visual Regression Test Tool
 
 [![npm version](https://badge.fury.io/js/firn.svg)](https://badge.fury.io/js/firn)
 [![Coverage Status](https://coveralls.io/repos/github/smartfrog-oss/firn/badge.svg?branch=master)](https://coveralls.io/github/smartfrog-oss/firn?branch=master)
