@@ -1,0 +1,48 @@
+language: node_js
+node_js:
+  - '8'
+
+sudo: false
+
+branches:
+  only:
+    - master
+    - development
+
+install:
+  - yarn
+
+script:
+  - yarn test
+
+after_success:
+  - yarn test --coverage --coverageReporters=text-lcov | npx coveralls
+
+cache:
+  yarn: true
+  directories:
+    - 'node_modules'
+
+notifications:
+  slack:
+    secure: $SLACK_TOKEN
+
+deploy:
+  - provider: npm
+    email: mouafa.ahmed@smartfrog.com
+    api_key:
+      secure: $NPM_TOKEN
+    on:
+      repo: smartfrog-oss/firn
+      branch: master
+    skip_cleanup: true
+
+  - provider: npm
+    email: mouafa.ahmed@smartfrog.com
+    api_key:
+      secure: $NPM_TOKEN
+    on:
+      repo: smartfrog-oss/firn
+      branch: development
+    skip_cleanup: true
+    tag: next
