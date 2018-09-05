@@ -5,7 +5,7 @@ const { check } = require('./src/lib/check')
 const { mergeConfig } = require('./src/config')
 
 async function main(urls, config) {
-  mergeConfig(config)
+  global.config = mergeConfig(config)
   await boot()
   await check(urls)
   await teardown()

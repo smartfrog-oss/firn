@@ -3,7 +3,7 @@ const firn = require('./')
 const log = require('./src/lib/log')
 
 const urls = ['https://smartfrog.com/de-de/shop', 'https://smartfrog.com/de-de/shop/products']
-const config = { screenshotExt: 'jpg' }
+const config = { screenshotExt: 'png' }
 
 firn(urls, config)
   .then(e => {

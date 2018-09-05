@@ -10,8 +10,7 @@ describe('Config | getConfig', () => {
 
   it('setConfig expected return', () => {
     const userConfig = { screenshotExt: 'jpg' }
-    config.mergeConfig(userConfig)
-    const result = config.getConfig()
+    const result = config.mergeConfig(userConfig)
     const expected = Object.assign({}, defaultConfig, userConfig)
     expect(result.screenshotExt).toEqual('jpg')
     expect(result).toEqual(expected)
