@@ -12,6 +12,7 @@ const viewports = config.viewports
 
 class Shot {
   constructor(url, viewport = viewports.laptop, suffix = 'laptop') {
+    console.info('config', config.screenshotExt)
     this.url = url
     this.suffix = suffix
     this.paths = {
@@ -55,8 +56,11 @@ class Shot {
     // const [err, match] = await compare(this.ligitPath, buffer)
     await makeDir(this.paths.fishy.folder)
     const [err, match] = await compare(this.ligitPath, this.pendingPath, this.fishyPath)
+    // console.info('shot', [err, match])
     if (err) throw new Error(err)
     if (!match) throw new Error(`shots are not matching: ${this.url}@${this.suffix}`)
+    // console.info('shotx', [err, match])
+
     return match
   }
 
