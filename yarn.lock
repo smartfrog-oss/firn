@@ -2740,6 +2740,10 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
+promx@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/promx/-/promx-1.0.1.tgz#d1602457b6c40478881871eea918e93511303ae2"
+
 proxy-from-env@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.0.0.tgz#33c50398f70ea7eb96d21f7b817630a55791c7ee"

@@ -38,7 +38,7 @@ describe('Shot | capture', () => {
     expect(result).toEqual(expected)
   })
 
-  it('should store screenshot in pending path', async () => {
+  it('should store screenshot in tmp path', async () => {
     await shot.capture()
     expect(makeDir).toBeCalled()
     expect(page.setViewport).toBeCalledWith(expect.objectContaining(viewports.mobile))
@@ -46,7 +46,7 @@ describe('Shot | capture', () => {
 
     expect(page.screenshot).toBeCalledWith(expect.any(Object))
     expect(page.screenshot).toBeCalledWith(expect.objectContaining({ path: expect.any(String), fullPage: true }))
-    expect(page.screenshot).toBeCalledWith(expect.objectContaining({ path: expect.stringContaining(shot.paths.pending.file), fullPage: true }))
+    expect(page.screenshot).toBeCalledWith(expect.objectContaining({ path: expect.stringContaining(shot.paths.tmp.file), fullPage: true }))
   })
 
   it('should store screenshot in legit path', async () => {
@@ -76,11 +76,18 @@ describe('Shot | check', () => {
     expect(match).toEqual(true)
   })
 
-  it.skip('should throw error', async () => {
+  it('should return false', async () => {
     // expect.assertions(1)
     shot.hasLegit = jest.fn(() => true)
     royax.mockResult([null, { match: 0 }])
+    const match = await shot.check()
+    expect(match).toEqual(false)
+  })
 
-    expect(shot.check()).rejects.toContain({ message: /shots are not matching/ })
+  it('should reject with error', async () => {
+    expect.assertions(1)
+    shot.hasLegit = jest.fn(() => true)
+    royax.mockResult(['ENOENT'])
+    return expect(shot.check()).rejects.toBeTruthy()
   })
 })
