@@ -1,62 +1,54 @@
 const fs = require('fs')
 /* npm */
 const makeDir = require('make-dir')
+// const moveFile = require('move-file')
 
 /* local */
-const config = require('../config').getConfig()
-const log = require('./log')
 const compare = require('./compare')
 const { getPaths } = require('./util')
-
-const viewports = config.viewports
+const raport = require('./raport')
 
 class Shot {
-  constructor(url, viewport = viewports.laptop, suffix = 'laptop') {
+  constructor(url, viewport, suffix = 'laptop') {
+    const config = global.config
+
+    this.viewport = viewport || config.viewports.laptop
     this.url = url
     this.suffix = suffix
     this.paths = {
-      legit: getPaths(url, { suffix, base: config.legitShotPath, extension: config.screenshotExt }),
-      pending: getPaths(url, { suffix, base: config.pendingShotPath, extension: config.screenshotExt }),
-      fishy: getPaths(url, { suffix, base: config.fishyShotPath, extension: config.screenshotExt })
+      tmp: getPaths(url, { suffix, base: config.tmpShotPath, extension: config.screenshotExt }),
+      legit: getPaths(url, { suffix, base: config.legitShotPath, extension: config.screenshotExt })
+      // fishy: getPaths(url, { suffix, base: config.fishyShotPath, extension: config.screenshotExt }),
+      // diff: getPaths(url, { suffix, base: config.diffShotPath, extension: config.screenshotExt })
     }
-    this.viewport = viewport
     // log('list', this.paths)
     // this.spinner = ora(`${url}@${suffix}`)
   }
 
   async capture({ isLegit = false } = {}) {
-    const paths = isLegit ? this.paths.legit : this.paths.pending
-
+    const paths = isLegit ? this.paths.legit : this.paths.tmp
     await makeDir(paths.folder)
-    // log('smile  📷 ', this.url, this.viewport)
     const page = await global.browser.newPage()
     page.setViewport(this.viewport)
     await page.goto(this.url, { waitUntil: 'networkidle2' })
     const buffer = await page.screenshot({ path: paths.file, fullPage: true })
-    // await await page.closers()
-    // log('captured 📸 ', this.url, this.viewport)
+    page.close() // no need to wait until page is closed
     return buffer
   }
 
-  hasLegit() {
-    return fs.existsSync(this.paths.legit.file)
-  }
-
   async check() {
-    // this.spinner.start()
     if (!this.hasLegit()) {
-      // log('this is a new shot, it will be legitimate now for future use')
       await this.legitimate()
       return true
     }
-
-    // log('path', this.ligitPath)
-    const buffer = await this.capture()
-    // const [err, match] = await compare(this.ligitPath, buffer)
-    await makeDir(this.paths.fishy.folder)
-    const [err, match] = await compare(this.ligitPath, this.pendingPath, this.fishyPath)
+    await this.capture()
+    const [err, match] = await compare(this.ligitPath, this.tmpPath)
     if (err) throw new Error(err)
-    if (!match) throw new Error(`shots are not matching: ${this.url}@${this.suffix}`)
+    raport.add({ url: this.url, suffix: this.suffix }, { match })
+
+    // await moveFile(this.tmpPath, this.fishyPath)
+    // if (!match) throw new Error(`shots are not matching: ${this.url}@${this.suffix}`)
+    // console.log('match', match)
     return match
   }
 
@@ -64,17 +56,27 @@ class Shot {
     await this.capture({ isLegit: true })
   }
 
+  hasLegit() {
+    return fs.existsSync(this.paths.legit.file)
+  }
+
+  /** paths getter */
+
+  get tmpPath() {
+    return this.paths.tmp.file
+  }
+
   get ligitPath() {
     return this.paths.legit.file
   }
 
-  get pendingPath() {
-    return this.paths.pending.file
-  }
+  // get fishyPath() {
+  //   return this.paths.fishy.file
+  // }
 
-  get fishyPath() {
-    return this.paths.fishy.file
-  }
+  // get diffPath() {
+  //   return this.paths.diff.file
+  // }
 }
 
 module.exports = Shot

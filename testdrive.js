@@ -1,15 +1,11 @@
 // const firn = require('./')
-const firn = require('./')
+const firn = require('./main.js')
 const log = require('./src/lib/log')
 
-const urls = ['https://smartfrog.com/de-de/shop']
-const config = {}
-
-firn(urls[0], config)
-  .then(e => {
-    log('👍 ALL GOOD')
-  })
-  .catch(e => {
-    log('😦 Oh No! ', e)
-    process.exit(1)
-  })
+const urls = ['https://smartfrog.com/de-de/shop', 'https://smartfrog.com/de-de/shop/products']
+const config = { screenshotExt: 'png' }
+;(async () => {
+  const [err, raport] = await firn(urls, config)
+  if (err) log('😦 Oh No! ', err)
+  log('📝  raport ', raport)
+})()

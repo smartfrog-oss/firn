@@ -43,5 +43,9 @@ firn http://example.com/
 ```js
 const firn = require('firn')
 
-firn('http://example.com/')
+;(async () => {
+  const [err, raport] = await firn(urls, config)
+  if (err) log('😦 Oh No! ', err)
+  log('📝  raport ', raport)
+})()
 ```

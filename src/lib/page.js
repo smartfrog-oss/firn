@@ -1,3 +1,5 @@
+const Listr = require('listr')
+
 const config = require('../config').getConfig()
 const viewports = config.viewports
 
@@ -15,16 +17,21 @@ class Page {
 
   getTasks(cb) {
     return this.set.map(options => {
-      return function task() {
-        return cb(options)
+      return {
+        title: `${options[2]}`,
+        task() {
+          return cb(options)
+        }
       }
     })
   }
 
   runTasks(cb) {
-    const tasks = this.getTasks(cb)
-    const promises = tasks.map(async task => await task())
-    return Promise.all(promises)
+    const tasks = new Listr(this.getTasks(cb), { concurrent: true, exitOnError: false })
+
+    // const promises = tasks.map(async task => await task())
+    // return Promise.all(promises)
+    return tasks.run()
   }
 }
 
