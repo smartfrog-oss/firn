@@ -1,8 +1,7 @@
 const fs = require('fs')
 /* npm */
 const makeDir = require('make-dir')
-const moveFile = require('move-file')
-const royax = require('royax')
+// const moveFile = require('move-file')
 
 /* local */
 const compare = require('./compare')
