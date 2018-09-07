@@ -37,7 +37,7 @@ class Shot {
   }
 
   async check() {
-    if (!this.hasLegit) {
+    if (!this.hasLegit()) {
       await this.legitimate()
       return true
     }
@@ -56,7 +56,7 @@ class Shot {
     await this.capture({ isLegit: true })
   }
 
-  get hasLegit() {
+  hasLegit() {
     return fs.existsSync(this.paths.legit.file)
   }
 
