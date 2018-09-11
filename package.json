@@ -1,6 +1,6 @@
 {
   "name": "firn",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "visual regression test tool",
   "main": "main.js",
   "author": "mouafa",
