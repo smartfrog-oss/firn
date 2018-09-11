@@ -23,7 +23,8 @@ async function boot() {
 
 async function teardown() {
   log('👋 firn')
-  global.browser.close()
+  await global.browser.close()
+  global.browser = null
 }
 
 module.exports = main
