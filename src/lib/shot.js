@@ -32,14 +32,16 @@ class Shot {
     page.setViewport(this.viewport)
     await page.goto(this.url, { waitUntil: 'networkidle2' })
     const buffer = await page.screenshot({ path: paths.file, fullPage: true })
-    page.close() // no need to wait until page is closed
+    // page.close() // no need to wait until page is closed
     return buffer
   }
 
   async check() {
     if (!this.hasLegit()) {
       await this.legitimate()
-      return true
+      const match = true
+      raport.add({ url: this.url, suffix: this.suffix }, { match })
+      return match
     }
     await this.capture()
     const [err, match] = await compare(this.ligitPath, this.tmpPath)
