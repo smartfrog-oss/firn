@@ -1,6 +1,6 @@
 {
   "name": "firn",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "description": "visual regression test tool",
   "main": "main.js",
   "author": "mouafa",
@@ -15,9 +15,9 @@
     "commander": "2.17.1",
     "listr": "0.14.1",
     "make-dir": "1.3.0",
-    "pixelmatch": "4.0.2",
+    "promx": "1.0.1",
     "puppeteer": "1.7.0",
-    "royax": "0.1.1"
+    "royax": "1.0.0"
   },
   "devDependencies": {
     "coveralls": "3.0.2",

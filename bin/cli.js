@@ -11,19 +11,14 @@ program
   .option('-c, --config [path]', 'Remove recursively')
   .option('-u, --update', 'Update specefic Shots')
   .option('-a, --all', 'Update all Shots')
-  .action(function(url, config) {
+  .action(async function(url, config) {
     if (!url.startsWith('http')) url = `https://${url}`
 
     console.log('url ', url)
-    console.log('config ', program.config)
-    firn(url)
-      .then(e => {
-        log('👍 ALL GOOD')
-      })
-      .catch(e => {
-        log('😦 Oh No! ', e)
-        process.exit(1)
-      })
+    // console.log('config ', program.config)
+    const [err, raport] = await firn(url)
+    if (err) log('😦 Oh No! ', err)
+    log('📝  raport ', raport)
   })
 
 program.parse(process.argv)
