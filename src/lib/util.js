@@ -4,7 +4,7 @@ function arrayArg(arg) {
   return Array.isArray(arg) ? arg : [arg]
 }
 
-function getPaths(url, { suffix = '', base, extension = 'png' } = {}) {
+function preparePaths(url, { suffix = '', base, extension = 'png' } = {}) {
   if (!url) throw new Error('expected url')
   if (!base) throw new Error('expected base folder')
   const { host, pathname } = new URL(url)
@@ -18,5 +18,5 @@ function getPaths(url, { suffix = '', base, extension = 'png' } = {}) {
 
 module.exports = {
   arrayArg,
-  getPaths
+  preparePaths
 }

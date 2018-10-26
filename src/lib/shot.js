@@ -5,7 +5,7 @@ const makeDir = require('make-dir')
 
 /* local */
 const compare = require('./compare')
-const { getPaths } = require('./util')
+const { preparePaths } = require('./util')
 const raport = require('./raport')
 
 class Shot {
@@ -16,10 +16,10 @@ class Shot {
     this.url = url
     this.suffix = suffix
     this.paths = {
-      tmp: getPaths(url, { suffix, base: config.tmpShotPath, extension: config.screenshotExt }),
-      legit: getPaths(url, { suffix, base: config.legitShotPath, extension: config.screenshotExt })
-      // fishy: getPaths(url, { suffix, base: config.fishyShotPath, extension: config.screenshotExt }),
-      // diff: getPaths(url, { suffix, base: config.diffShotPath, extension: config.screenshotExt })
+      tmp: preparePaths(url, { suffix, base: config.tmpShotPath, extension: config.screenshotExt }),
+      legit: preparePaths(url, { suffix, base: config.legitShotPath, extension: config.screenshotExt }),
+      diff: preparePaths(url, { suffix, base: config.diffShotPath, extension: config.screenshotExt })
+      // fishy: preparePaths(url, { suffix, base: config.fishyShotPath, extension: config.screenshotExt }),
     }
     // log('list', this.paths)
     // this.spinner = ora(`${url}@${suffix}`)
@@ -44,7 +44,8 @@ class Shot {
       return match
     }
     await this.capture()
-    const [err, match] = await compare(this.ligitPath, this.tmpPath)
+    await makeDir(this.paths.diff.folder)
+    const [err, match] = await compare(this.ligitPath, this.tmpPath, this.diffPath)
     if (err) throw new Error(err)
     raport.add({ url: this.url, suffix: this.suffix }, { match })
 
@@ -76,9 +77,9 @@ class Shot {
   //   return this.paths.fishy.file
   // }
 
-  // get diffPath() {
-  //   return this.paths.diff.file
-  // }
+  get diffPath() {
+    return this.paths.diff.file
+  }
 }
 
 module.exports = Shot
